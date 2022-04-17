@@ -1,6 +1,13 @@
 *.ts
 !*.d.ts
 
+.husky/
+.idea/
+jest.config.js
+*.json
+test/
+node_modules/
+
 # CDK asset staging directory
 .cdk.staging
 cdk.out
