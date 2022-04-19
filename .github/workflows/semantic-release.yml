@@ -15,7 +15,7 @@ jobs:
       #        run: npm test
 
       - name: Build
-        run: npm build
+        run: npm run build
 
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v3
