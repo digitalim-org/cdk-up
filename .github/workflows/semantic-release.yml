@@ -3,6 +3,7 @@ on: [ push ]
 jobs:
   Semantic-Release-Action:
     runs-on: ubuntu-latest
+    environment: NPM Publish
     steps:
       - name: Checkout
         uses: actions/checkout@v3
