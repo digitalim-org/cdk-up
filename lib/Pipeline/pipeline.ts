@@ -102,7 +102,7 @@ export default class Pipeline extends Construct {
                             environment: {
                                 buildImage: LinuxBuildImage.STANDARD_5_0
                             },
-                            buildSpec: yaml.load(path.join(__dirname, 'buildspec.yml'))
+                            buildSpec: BuildSpec.fromObjectToYaml(yaml.load(path.join(__dirname, 'buildspec.yml')))
                         }),
                         outputs: [deploymentArtifact]
                     })]
