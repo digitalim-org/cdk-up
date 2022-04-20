@@ -8,7 +8,7 @@ import {Topic} from "aws-cdk-lib/aws-sns";
 import {CodeBuildAction, GitHubSourceAction, S3DeployAction} from "aws-cdk-lib/aws-codepipeline-actions";
 import {BuildSpec, LinuxBuildImage, PipelineProject} from "aws-cdk-lib/aws-codebuild";
 import {PolicyStatement} from "aws-cdk-lib/aws-iam";
-import yaml from "js-yaml"
+import * as yaml from "js-yaml"
 import * as path from "path";
 
 export type PipelineProps = {
