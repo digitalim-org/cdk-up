@@ -11,11 +11,13 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
+    "@types/js-yaml": "^4.0.5",
     "@types/node": "10.17.27",
     "aws-cdk-lib": "2.20.0",
     "constructs": "^10.0.0",
     "husky": "^7.0.4",
     "jest": "^26.4.2",
+    "js-yaml": "^4.1.0",
     "lint-staged": "^12.3.8",
     "prettier": "^2.6.2",
     "ts-jest": "^26.2.0",
