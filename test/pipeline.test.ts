@@ -35,7 +35,7 @@ describe("Pipeline", () => {
         const expectedYaml = fs.readFileSync(
             path.join(
                 __dirname,
-                '..',
+                // '..',
                 'lib',
                 'Pipeline',
                 'buildspec.yml'
