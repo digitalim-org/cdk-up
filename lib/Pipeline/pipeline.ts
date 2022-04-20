@@ -8,6 +8,8 @@ import {Topic} from "aws-cdk-lib/aws-sns";
 import {CodeBuildAction, GitHubSourceAction, S3DeployAction} from "aws-cdk-lib/aws-codepipeline-actions";
 import {BuildSpec, LinuxBuildImage, PipelineProject} from "aws-cdk-lib/aws-codebuild";
 import {PolicyStatement} from "aws-cdk-lib/aws-iam";
+import yaml from "js-yaml"
+import * as path from "path";
 
 export type PipelineProps = {
     deploymentBucket: Bucket
@@ -99,32 +101,7 @@ export default class Pipeline extends Construct {
                             environment: {
                                 buildImage: LinuxBuildImage.STANDARD_5_0
                             },
-                            buildSpec: BuildSpec.fromObjectToYaml({
-                                version: "0.2",
-                                phases: {
-                                    install: {
-                                        "runtime-versions": {
-                                            nodejs: 14
-                                        },
-                                        commands: [
-                                            "npm i -g npm",
-                                            "npm i"
-                                        ]
-                                    },
-                                    build: {
-                                        "runtime-versions": {
-                                            nodejs: 14
-                                        },
-                                        commands: [
-                                            "npm build"
-                                        ]
-                                    }
-                                },
-                                artifacts: {
-                                    "base-directory": "build",
-                                    files: ["**/*"]
-                                }
-                            })
+                            buildSpec: yaml.load(path.join(__dirname, 'buildspec.yml'))
                         }),
                         outputs: [deploymentArtifact]
                     })]
