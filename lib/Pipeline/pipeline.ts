@@ -9,6 +9,7 @@ import {CodeBuildAction, GitHubSourceAction, S3DeployAction} from "aws-cdk-lib/a
 import {BuildSpec, LinuxBuildImage, PipelineProject} from "aws-cdk-lib/aws-codebuild";
 import {PolicyStatement} from "aws-cdk-lib/aws-iam";
 import * as path from "path";
+import * as fs from "fs";
 
 const yaml = require("js-yaml")
 
@@ -104,7 +105,10 @@ export default class Pipeline extends Construct {
                             },
                             buildSpec: BuildSpec.fromObjectToYaml(
                                 yaml.load(
-                                    path.join(__dirname, 'buildspec.yml')
+                                    fs.readFileSync(
+                                        path.join(__dirname, 'buildspec.yml'),
+                                        {encoding: "utf-8"}
+                                    )
                                 )
                             )
                         }),
