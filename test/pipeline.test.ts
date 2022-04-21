@@ -42,6 +42,8 @@ describe("Pipeline", () => {
             ), {encoding: 'utf8'}
         )
 
+        console.log(expectedYaml)
+
         template.hasResourceProperties("AWS::CodeBuild::Project", {
             Source: {
                 BuildSpec: expectedYaml
