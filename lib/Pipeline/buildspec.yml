@@ -1,16 +1,16 @@
 version: "0.2"
 phases:
   install:
-    runtime-versions:
-      nodejs: 14
     commands:
-      - npm i -g npm
-      - npm i
+      - npm i -g yarn
+      - yarn install
+  # pre_build:
+  #   commands:
+  #     - yarn lint
+  #     - yarn test
   build:
-    runtime-versions:
-      nodejs: 14
     commands:
-      - npm build
+      - yarn build
 artifacts:
   base-directory: build
   files:

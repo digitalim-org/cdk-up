@@ -1,1 +1,1 @@
-export { default as StaticWebapp } from './StaticWebApp'
+export { default as StaticWebApp } from "./StaticWebApp";
