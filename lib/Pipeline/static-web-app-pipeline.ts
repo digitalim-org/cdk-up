@@ -10,9 +10,7 @@ import { SlackChannelConfiguration } from "aws-cdk-lib/aws-chatbot";
 import { Topic } from "aws-cdk-lib/aws-sns";
 import {
   CodeBuildAction,
-  GitHubSourceAction,
   S3DeployAction,
-  GitHubSourceActionProps,
 } from "aws-cdk-lib/aws-codepipeline-actions";
 import {
   BuildEnvironment,
@@ -23,46 +21,16 @@ import {
 import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 import * as path from "path";
 import * as fs from "fs";
+import githubSourceStage, {
+  GithubSourceStageProps,
+} from "./github-source-stage";
 
 const yaml = require("js-yaml");
 
-export type PipelineProps = {
+export type StaticWebAppPipelineProps = {
   deploymentBucket: Bucket;
   webDistribution: Distribution;
   pipelineName?: string;
-  githubRepo: {
-    /**
-     * The GitHub account/user that owns the repo.
-     */
-    owner: string;
-    /**
-     * The name of the repo, without the username.
-     */
-    name: string;
-    /**
-     * A GitHub OAuth token to use for authentication.
-     *
-     * It is recommended to use a Secrets Manager `Secret` to obtain the token:
-     *
-     *   const oauth = cdk.SecretValue.secretsManager('my-github-token');
-     *   new GitHubSource(this, 'GitHubAction', { oauthToken: oauth, ... });
-     *
-     * If you rotate the value in the Secret, you must also change at least one property
-     * of the CodePipeline to force CloudFormation to re-read the secret.
-     *
-     * The GitHub Personal Access Token should have these scopes:
-     *
-     * * **repo** - to read the repository
-     * * **admin:repo_hook** - if you plan to use webhooks (true by default)
-     *
-     * @see https://docs.aws.amazon.com/codepipeline/latest/userguide/appendix-github-oauth.html#GitHub-create-personal-token-CLI
-     */
-    oauthToken: SecretValue;
-    /**
-     * The branch to configure the webhook on.
-     */
-    branch: string;
-  };
   build?: {
     environmentVariables: BuildEnvironment["environmentVariables"];
   };
@@ -72,7 +40,7 @@ export type PipelineProps = {
     workspaceId: string;
     channelId: string;
   };
-};
+} & { githubRepo: GithubSourceStageProps };
 
 export default class Pipeline extends Construct {
   constructor(
@@ -85,7 +53,7 @@ export default class Pipeline extends Construct {
       githubRepo,
       build,
       slack,
-    }: PipelineProps
+    }: StaticWebAppPipelineProps
   ) {
     super(scope, id);
 
@@ -107,7 +75,7 @@ export default class Pipeline extends Construct {
             build: {
               commands: [
                 // eslint-disable-next-line no-template-curly-in-string
-                'aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_ID} --paths "/index.html"',
+                'aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_ID} --paths "/*"',
               ],
             },
           },
@@ -135,19 +103,7 @@ export default class Pipeline extends Construct {
       restartExecutionOnUpdate: true,
       artifactBucket,
       stages: [
-        {
-          stageName: "Source",
-          actions: [
-            new GitHubSourceAction({
-              actionName: "GitHubSource",
-              owner: githubRepo.owner,
-              repo: githubRepo.name,
-              oauthToken: githubRepo.oauthToken,
-              output: sourceRepoArtifact,
-              branch: githubRepo.branch,
-            }),
-          ],
-        },
+        githubSourceStage({ ...githubRepo, sourceRepoArtifact }),
         {
           stageName: "Build",
           actions: [
@@ -165,9 +121,12 @@ export default class Pipeline extends Construct {
                 },
                 buildSpec: BuildSpec.fromObjectToYaml(
                   yaml.load(
-                    fs.readFileSync(path.join(__dirname, "buildspec.yml"), {
-                      encoding: "utf-8",
-                    })
+                    fs.readFileSync(
+                      path.join(__dirname, "static-web-app.buildspec.yml"),
+                      {
+                        encoding: "utf-8",
+                      }
+                    )
                   )
                 ),
               }),

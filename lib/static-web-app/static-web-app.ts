@@ -1,9 +1,15 @@
+import { join as pathJoin } from "path";
 import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 import {
   Distribution,
+  Function,
+  FunctionCode,
+  FunctionEventType,
+  LambdaEdgeEventType,
   OriginAccessIdentity,
   PriceClass,
+  ResponseHeadersPolicy,
   ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
 import { Construct } from "constructs";
@@ -21,6 +27,8 @@ import {
   RecordTarget,
 } from "aws-cdk-lib/aws-route53";
 import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets";
+import { BucketDeployment } from "aws-cdk-lib/aws-s3-deployment";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 
 export enum DnsRegistrar {
   AWS,
@@ -77,7 +85,7 @@ export default class StaticWebApp extends Construct {
     }
 
     const deploymentBucket = new Bucket(this, "S3DeploymentBucket", {
-      versioned: true,
+      versioned: false,
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
@@ -87,17 +95,38 @@ export default class StaticWebApp extends Construct {
       "CloudFrontDistributionOriginAccessIdentity"
     );
 
+    const viewerRequestFunction = new Function(this, "viewer-request", {
+      code: FunctionCode.fromFile({
+        filePath: pathJoin(__dirname, "cloudfront-function.viewer-request.js"),
+      }),
+    });
+
+    const viewerResponseFunction = new NodejsFunction(this, "origin-response");
+
     const webDistribution = new Distribution(this, "CloudFrontDistribution", {
       defaultBehavior: {
         origin: new S3Origin(deploymentBucket, {
           originAccessIdentity,
         }),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        edgeLambdas: [
+          {
+            eventType: LambdaEdgeEventType.ORIGIN_RESPONSE,
+            functionVersion: viewerResponseFunction.currentVersion,
+          },
+        ],
+        functionAssociations: [
+          {
+            eventType: FunctionEventType.VIEWER_REQUEST,
+            function: viewerRequestFunction,
+          },
+        ],
       },
       defaultRootObject: "index.html",
-      priceClass: PriceClass.PRICE_CLASS_100,
-      domainNames: [domainName],
-      certificate,
+      priceClass: PriceClass.PRICE_CLASS_ALL,
+      // domainNames: [domainName],
+      // certificate,
+      enableLogging: true,
     });
 
     dns.registrar === DnsRegistrar.AWS &&

@@ -1,15 +1,17 @@
 import StaticWebApp, { StaticWebAppProps } from "./static-web-app";
-import Pipeline, { PipelineProps } from "../Pipeline";
+import { StaticWebAppPipelineProps, StaticWebAppPipeline } from "../pipeline";
 import { Construct } from "constructs";
 import { Stack } from "aws-cdk-lib";
+import { Distribution } from "aws-cdk-lib/aws-cloudfront";
+import { Bucket } from "aws-cdk-lib/aws-s3";
 
 type StaticWebAppWithPipelineProps = StaticWebAppProps &
-  (
-    | ({ withPipeline: true } & Omit<PipelineProps, keyof StaticWebApp>)
-    | { withPipeline: false }
-  );
+  Omit<StaticWebAppPipelineProps, keyof StaticWebApp>;
 
 export default class StaticWebAppWithPipeline extends Construct {
+  public readonly webDistribution: Distribution;
+  public readonly deploymentBucket: Bucket;
+
   constructor(
     scope: Stack,
     id: string,
@@ -18,7 +20,6 @@ export default class StaticWebAppWithPipeline extends Construct {
       dns,
       wwwAlias,
       certificate,
-      withPipeline,
       ...pipelineProps
     }: StaticWebAppWithPipelineProps
   ) {
@@ -30,12 +31,12 @@ export default class StaticWebAppWithPipeline extends Construct {
       { domainName, dns, wwwAlias, certificate } as StaticWebAppProps
     );
 
-    if (withPipeline === true) {
-      new Pipeline(scope, "Pipeline", {
-        ...(pipelineProps as PipelineProps),
-        webDistribution,
-        deploymentBucket,
-      });
-    }
+    new StaticWebAppPipeline(scope, "Pipeline", {
+      ...(pipelineProps as StaticWebAppPipelineProps),
+      webDistribution,
+      deploymentBucket,
+    });
+
+    Object.assign(this, { webDistribution, deploymentBucket });
   }
 }
