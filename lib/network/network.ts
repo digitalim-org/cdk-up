@@ -22,10 +22,6 @@ export default class Network extends Construct {
           name: "Private",
           subnetType: SubnetType.PRIVATE_ISOLATED,
         },
-        // {
-        //   name: "Private2",
-        //   subnetType: SubnetType.PRIVATE_ISOLATED,
-        // },
       ],
     });
 
