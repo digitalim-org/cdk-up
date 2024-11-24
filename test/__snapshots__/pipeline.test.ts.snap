@@ -1,44 +1,168 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Pipeline Matches snapshot 1`] = `
-Object {
-  "Parameters": Object {
-    "BootstrapVersion": Object {
+{
+  "Mappings": {
+    "LatestNodeRuntimeMap": {
+      "af-south-1": {
+        "value": "nodejs20.x",
+      },
+      "ap-east-1": {
+        "value": "nodejs20.x",
+      },
+      "ap-northeast-1": {
+        "value": "nodejs20.x",
+      },
+      "ap-northeast-2": {
+        "value": "nodejs20.x",
+      },
+      "ap-northeast-3": {
+        "value": "nodejs20.x",
+      },
+      "ap-south-1": {
+        "value": "nodejs20.x",
+      },
+      "ap-south-2": {
+        "value": "nodejs20.x",
+      },
+      "ap-southeast-1": {
+        "value": "nodejs20.x",
+      },
+      "ap-southeast-2": {
+        "value": "nodejs20.x",
+      },
+      "ap-southeast-3": {
+        "value": "nodejs20.x",
+      },
+      "ap-southeast-4": {
+        "value": "nodejs20.x",
+      },
+      "ap-southeast-5": {
+        "value": "nodejs20.x",
+      },
+      "ap-southeast-7": {
+        "value": "nodejs20.x",
+      },
+      "ca-central-1": {
+        "value": "nodejs20.x",
+      },
+      "ca-west-1": {
+        "value": "nodejs20.x",
+      },
+      "cn-north-1": {
+        "value": "nodejs18.x",
+      },
+      "cn-northwest-1": {
+        "value": "nodejs18.x",
+      },
+      "eu-central-1": {
+        "value": "nodejs20.x",
+      },
+      "eu-central-2": {
+        "value": "nodejs20.x",
+      },
+      "eu-isoe-west-1": {
+        "value": "nodejs18.x",
+      },
+      "eu-north-1": {
+        "value": "nodejs20.x",
+      },
+      "eu-south-1": {
+        "value": "nodejs20.x",
+      },
+      "eu-south-2": {
+        "value": "nodejs20.x",
+      },
+      "eu-west-1": {
+        "value": "nodejs20.x",
+      },
+      "eu-west-2": {
+        "value": "nodejs20.x",
+      },
+      "eu-west-3": {
+        "value": "nodejs20.x",
+      },
+      "il-central-1": {
+        "value": "nodejs20.x",
+      },
+      "me-central-1": {
+        "value": "nodejs20.x",
+      },
+      "me-south-1": {
+        "value": "nodejs20.x",
+      },
+      "mx-central-1": {
+        "value": "nodejs20.x",
+      },
+      "sa-east-1": {
+        "value": "nodejs20.x",
+      },
+      "us-east-1": {
+        "value": "nodejs20.x",
+      },
+      "us-east-2": {
+        "value": "nodejs20.x",
+      },
+      "us-gov-east-1": {
+        "value": "nodejs18.x",
+      },
+      "us-gov-west-1": {
+        "value": "nodejs18.x",
+      },
+      "us-iso-east-1": {
+        "value": "nodejs18.x",
+      },
+      "us-iso-west-1": {
+        "value": "nodejs18.x",
+      },
+      "us-isob-east-1": {
+        "value": "nodejs18.x",
+      },
+      "us-west-1": {
+        "value": "nodejs20.x",
+      },
+      "us-west-2": {
+        "value": "nodejs20.x",
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
       "Default": "/cdk-bootstrap/hnb659fds/version",
       "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
   },
-  "Resources": Object {
-    "Bucket83908E77": Object {
+  "Resources": {
+    "Bucket83908E77": {
       "DeletionPolicy": "Retain",
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
-    "BucketPolicyE9A3008A": Object {
-      "Properties": Object {
-        "Bucket": Object {
+    "BucketPolicyE9A3008A": {
+      "Properties": {
+        "Bucket": {
           "Ref": "Bucket83908E77",
         },
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "s3:GetObject",
               "Effect": "Allow",
-              "Principal": Object {
-                "CanonicalUser": Object {
-                  "Fn::GetAtt": Array [
+              "Principal": {
+                "CanonicalUser": {
+                  "Fn::GetAtt": [
                     "DistributionOrigin1S3Origin5F5C0696",
                     "S3CanonicalUserId",
                   ],
                 },
               },
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
-                    Object {
-                      "Fn::GetAtt": Array [
+                  [
+                    {
+                      "Fn::GetAtt": [
                         "Bucket83908E77",
                         "Arn",
                       ],
@@ -54,105 +178,108 @@ Object {
       },
       "Type": "AWS::S3::BucketPolicy",
     },
-    "CodeBuild2FDE9E35": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "CodeBuild2FDE9E35": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "Image": "aws/codebuild/standard:5.0",
+          "EnvironmentVariables": [
+            {
+              "Name": "ENV",
+              "Type": "PLAINTEXT",
+              "Value": "PROD",
+            },
+          ],
+          "Image": "aws/codebuild/amazonlinux2-x86_64-standard:4.0",
           "ImagePullCredentialsType": "CODEBUILD",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
         },
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "CodeBuildRoleE9A44575",
             "Arn",
           ],
         },
-        "Source": Object {
-          "BuildSpec": "version: \\"0.2\\"
+        "Source": {
+          "BuildSpec": "version: "0.2"
 phases:
   install:
-    runtime-versions:
-      nodejs: 14
     commands:
-      - npm i -g npm
-      - npm i
+      - npm i -g yarn
+      - yarn install
   build:
-    runtime-versions:
-      nodejs: 14
     commands:
-      - npm build
+      - yarn build
 artifacts:
   base-directory: build
   files:
-    - \\"**/*\\"
+    - "**/*"
 ",
           "Type": "CODEPIPELINE",
         },
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "CodeBuildRoleDefaultPolicy196BAF24": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "CodeBuildRoleDefaultPolicy196BAF24": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:",
-                      Object {
+                      {
                         "Ref": "AWS::Region",
                       },
                       ":",
-                      Object {
+                      {
                         "Ref": "AWS::AccountId",
                       },
                       ":log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "CodeBuild2FDE9E35",
                       },
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:",
-                      Object {
+                      {
                         "Ref": "AWS::Region",
                       },
                       ":",
-                      Object {
+                      {
                         "Ref": "AWS::AccountId",
                       },
                       ":log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "CodeBuild2FDE9E35",
                       },
                       ":*",
@@ -161,8 +288,8 @@ artifacts:
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -170,24 +297,24 @@ artifacts:
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:",
-                    Object {
+                    {
                       "Ref": "AWS::Region",
                     },
                     ":",
-                    Object {
+                    {
                       "Ref": "AWS::AccountId",
                     },
                     ":report-group/",
-                    Object {
+                    {
                       "Ref": "CodeBuild2FDE9E35",
                     },
                     "-*",
@@ -195,8 +322,8 @@ artifacts:
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
@@ -209,19 +336,19 @@ artifacts:
                 "s3:Abort*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineS3ArtifactBucketD0011AD2",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineS3ArtifactBucketD0011AD2",
                           "Arn",
                         ],
@@ -236,22 +363,22 @@ artifacts:
           "Version": "2012-10-17",
         },
         "PolicyName": "CodeBuildRoleDefaultPolicy196BAF24",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "CodeBuildRoleE9A44575",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "CodeBuildRoleE9A44575": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "CodeBuildRoleE9A44575": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
@@ -261,68 +388,76 @@ artifacts:
       },
       "Type": "AWS::IAM::Role",
     },
-    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": Object {
-      "DependsOn": Array [
+    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+      "DependsOn": [
         "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
       ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "483ae06ed27ef8ca76e011264d772420593a6cfe8544759c306ef3b98c9e25be.zip",
+          "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip",
         },
-        "Description": Object {
-          "Fn::Join": Array [
+        "Description": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "Lambda function for auto-deleting objects in ",
-              Object {
+              {
                 "Ref": "PipelineS3ArtifactBucketD0011AD2",
               },
               " S3 bucket.",
             ],
           ],
         },
-        "Handler": "__entrypoint__.handler",
+        "Handler": "index.handler",
         "MemorySize": 128,
-        "Role": Object {
-          "Fn::GetAtt": Array [
+        "Role": {
+          "Fn::GetAtt": [
             "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": {
+          "Fn::FindInMap": [
+            "LatestNodeRuntimeMap",
+            {
+              "Ref": "AWS::Region",
+            },
+            "value",
+          ],
+        },
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
     },
-    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": Array [
-          Object {
+        "ManagedPolicyArns": [
+          {
             "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
           },
         ],
       },
       "Type": "AWS::IAM::Role",
     },
-    "Distribution830FAC52": Object {
-      "Properties": Object {
-        "DistributionConfig": Object {
-          "DefaultCacheBehavior": Object {
+    "Distribution830FAC52": {
+      "Properties": {
+        "DistributionConfig": {
+          "DefaultCacheBehavior": {
             "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
             "Compress": true,
             "TargetOriginId": "DistributionOrigin13547B94F",
@@ -331,22 +466,22 @@ artifacts:
           "Enabled": true,
           "HttpVersion": "http2",
           "IPV6Enabled": true,
-          "Origins": Array [
-            Object {
-              "DomainName": Object {
-                "Fn::GetAtt": Array [
+          "Origins": [
+            {
+              "DomainName": {
+                "Fn::GetAtt": [
                   "Bucket83908E77",
                   "RegionalDomainName",
                 ],
               },
               "Id": "DistributionOrigin13547B94F",
-              "S3OriginConfig": Object {
-                "OriginAccessIdentity": Object {
-                  "Fn::Join": Array [
+              "S3OriginConfig": {
+                "OriginAccessIdentity": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "origin-access-identity/cloudfront/",
-                      Object {
+                      {
                         "Ref": "DistributionOrigin1S3Origin5F5C0696",
                       },
                     ],
@@ -359,52 +494,52 @@ artifacts:
       },
       "Type": "AWS::CloudFront::Distribution",
     },
-    "DistributionOrigin1S3Origin5F5C0696": Object {
-      "Properties": Object {
-        "CloudFrontOriginAccessIdentityConfig": Object {
+    "DistributionOrigin1S3Origin5F5C0696": {
+      "Properties": {
+        "CloudFrontOriginAccessIdentityConfig": {
           "Comment": "Identity for DistributionOrigin13547B94F",
         },
       },
       "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
     },
-    "InvalidateCacheProject87BB538E": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "InvalidateCacheProject87BB538E": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "EnvironmentVariables": Array [
-            Object {
+          "EnvironmentVariables": [
+            {
               "Name": "CLOUDFRONT_ID",
               "Type": "PLAINTEXT",
-              "Value": Object {
+              "Value": {
                 "Ref": "Distribution830FAC52",
               },
             },
           ],
-          "Image": "aws/codebuild/standard:1.0",
+          "Image": "aws/codebuild/standard:7.0",
           "ImagePullCredentialsType": "CODEBUILD",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
         },
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "InvalidateCacheProjectRole76B60DD4",
             "Arn",
           ],
         },
-        "Source": Object {
+        "Source": {
           "BuildSpec": "{
-  \\"version\\": \\"0.2\\",
-  \\"phases\\": {
-    \\"build\\": {
-      \\"commands\\": [
-        \\"aws cloudfront create-invalidation --distribution-id \${CLOUDFRONT_ID} --paths \\\\\\"/index.html\\\\\\"\\"
+  "version": "0.2",
+  "phases": {
+    "build": {
+      "commands": [
+        "aws cloudfront create-invalidation --distribution-id \${CLOUDFRONT_ID} --paths \\"/*\\""
       ]
     }
   }
@@ -414,14 +549,14 @@ artifacts:
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "InvalidateCacheProjectRole76B60DD4": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "InvalidateCacheProjectRole76B60DD4": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
@@ -431,59 +566,59 @@ artifacts:
       },
       "Type": "AWS::IAM::Role",
     },
-    "InvalidateCacheProjectRoleDefaultPolicy77F72F7F": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "InvalidateCacheProjectRoleDefaultPolicy77F72F7F": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:",
-                      Object {
+                      {
                         "Ref": "AWS::Region",
                       },
                       ":",
-                      Object {
+                      {
                         "Ref": "AWS::AccountId",
                       },
                       ":log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "InvalidateCacheProject87BB538E",
                       },
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:",
-                      Object {
+                      {
                         "Ref": "AWS::Region",
                       },
                       ":",
-                      Object {
+                      {
                         "Ref": "AWS::AccountId",
                       },
                       ":log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "InvalidateCacheProject87BB538E",
                       },
                       ":*",
@@ -492,8 +627,8 @@ artifacts:
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -501,24 +636,24 @@ artifacts:
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:",
-                    Object {
+                    {
                       "Ref": "AWS::Region",
                     },
                     ":",
-                    Object {
+                    {
                       "Ref": "AWS::AccountId",
                     },
                     ":report-group/",
-                    Object {
+                    {
                       "Ref": "InvalidateCacheProject87BB538E",
                     },
                     "-*",
@@ -526,45 +661,45 @@ artifacts:
                 ],
               },
             },
-            Object {
+            {
               "Action": "cloudfront:CreateInvalidation",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:aws:cloudfront::",
-                    Object {
+                    {
                       "Ref": "AWS::AccountId",
                     },
                     ":distribution/",
-                    Object {
+                    {
                       "Ref": "Distribution830FAC52",
                     },
                   ],
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineS3ArtifactBucketD0011AD2",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineS3ArtifactBucketD0011AD2",
                           "Arn",
                         ],
@@ -579,44 +714,44 @@ artifacts:
           "Version": "2012-10-17",
         },
         "PolicyName": "InvalidateCacheProjectRoleDefaultPolicy77F72F7F",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "InvalidateCacheProjectRole76B60DD4",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineCodePipeline4FC0E9B7": Object {
-      "DependsOn": Array [
+    "PipelineCodePipeline4FC0E9B7": {
+      "DependsOn": [
         "PipelineCodePipelineRoleDefaultPolicy37C67326",
         "PipelineCodePipelineRoleEE058E60",
       ],
-      "Properties": Object {
-        "ArtifactStore": Object {
-          "Location": Object {
+      "Properties": {
+        "ArtifactStore": {
+          "Location": {
             "Ref": "PipelineS3ArtifactBucketD0011AD2",
           },
           "Type": "S3",
         },
         "RestartExecutionOnUpdate": true,
-        "RoleArn": Object {
-          "Fn::GetAtt": Array [
+        "RoleArn": {
+          "Fn::GetAtt": [
             "PipelineCodePipelineRoleEE058E60",
             "Arn",
           ],
         },
-        "Stages": Array [
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+        "Stages": [
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Source",
                   "Owner": "ThirdParty",
                   "Provider": "GitHub",
                   "Version": "1",
                 },
-                "Configuration": Object {
+                "Configuration": {
                   "Branch": "quux",
                   "OAuthToken": "bar",
                   "Owner": "foo",
@@ -624,8 +759,8 @@ artifacts:
                   "Repo": "baz",
                 },
                 "Name": "GitHubSource",
-                "OutputArtifacts": Array [
-                  Object {
+                "OutputArtifacts": [
+                  {
                     "Name": "Artifact_Source_GitHubSource",
                   },
                 ],
@@ -634,33 +769,33 @@ artifacts:
             ],
             "Name": "Source",
           },
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "ProjectName": Object {
+                "Configuration": {
+                  "ProjectName": {
                     "Ref": "CodeBuild2FDE9E35",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "Artifact_Source_GitHubSource",
                   },
                 ],
                 "Name": "CodeBuild",
-                "OutputArtifacts": Array [
-                  Object {
+                "OutputArtifacts": [
+                  {
                     "Name": "Artifact_Build_CodeBuild",
                   },
                 ],
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodePipelineBuildCodeBuildCodePipelineActionRoleC24DFEC3",
                     "Arn",
                   ],
@@ -670,29 +805,29 @@ artifacts:
             ],
             "Name": "Build",
           },
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Deploy",
                   "Owner": "AWS",
                   "Provider": "S3",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "BucketName": Object {
+                "Configuration": {
+                  "BucketName": {
                     "Ref": "Bucket83908E77",
                   },
                   "Extract": "true",
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "Artifact_Build_CodeBuild",
                   },
                 ],
                 "Name": "S3Deploy",
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodePipelineDeployS3DeployCodePipelineActionRole561C470A",
                     "Arn",
                   ],
@@ -702,28 +837,28 @@ artifacts:
             ],
             "Name": "Deploy",
           },
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "ProjectName": Object {
+                "Configuration": {
+                  "ProjectName": {
                     "Ref": "InvalidateCacheProject87BB538E",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "Artifact_Build_CodeBuild",
                   },
                 ],
                 "Name": "InvalidateCache",
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodePipelineInvalidateCacheInvalidateCacheCodePipelineActionRole50A587E8",
                     "Arn",
                   ],
@@ -737,24 +872,24 @@ artifacts:
       },
       "Type": "AWS::CodePipeline::Pipeline",
     },
-    "PipelineCodePipelineBuildCodeBuildCodePipelineActionRoleC24DFEC3": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineCodePipelineBuildCodeBuildCodePipelineActionRoleC24DFEC3": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::",
-                      Object {
+                      {
                         "Ref": "AWS::AccountId",
                       },
                       ":root",
@@ -769,19 +904,19 @@ artifacts:
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineCodePipelineBuildCodeBuildCodePipelineActionRoleDefaultPolicy6679B2BC": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "PipelineCodePipelineBuildCodeBuildCodePipelineActionRoleDefaultPolicy6679B2BC": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "CodeBuild2FDE9E35",
                   "Arn",
                 ],
@@ -791,32 +926,32 @@ artifacts:
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineCodePipelineBuildCodeBuildCodePipelineActionRoleDefaultPolicy6679B2BC",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineCodePipelineBuildCodeBuildCodePipelineActionRoleC24DFEC3",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineCodePipelineDeployS3DeployCodePipelineActionRole561C470A": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineCodePipelineDeployS3DeployCodePipelineActionRole561C470A": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::",
-                      Object {
+                      {
                         "Ref": "AWS::AccountId",
                       },
                       ":root",
@@ -831,12 +966,12 @@ artifacts:
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineCodePipelineDeployS3DeployCodePipelineActionRoleDefaultPolicy2FBDDB7B": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "PipelineCodePipelineDeployS3DeployCodePipelineActionRoleDefaultPolicy2FBDDB7B": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "s3:DeleteObject*",
                 "s3:PutObject",
                 "s3:PutObjectLegalHold",
@@ -846,19 +981,19 @@ artifacts:
                 "s3:Abort*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "Bucket83908E77",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "Bucket83908E77",
                           "Arn",
                         ],
@@ -869,26 +1004,26 @@ artifacts:
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineS3ArtifactBucketD0011AD2",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineS3ArtifactBucketD0011AD2",
                           "Arn",
                         ],
@@ -903,32 +1038,32 @@ artifacts:
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineCodePipelineDeployS3DeployCodePipelineActionRoleDefaultPolicy2FBDDB7B",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineCodePipelineDeployS3DeployCodePipelineActionRole561C470A",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineCodePipelineInvalidateCacheInvalidateCacheCodePipelineActionRole50A587E8": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineCodePipelineInvalidateCacheInvalidateCacheCodePipelineActionRole50A587E8": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::",
-                      Object {
+                      {
                         "Ref": "AWS::AccountId",
                       },
                       ":root",
@@ -943,19 +1078,19 @@ artifacts:
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineCodePipelineInvalidateCacheInvalidateCacheCodePipelineActionRoleDefaultPolicyDB9DC910": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "PipelineCodePipelineInvalidateCacheInvalidateCacheCodePipelineActionRoleDefaultPolicyDB9DC910": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "InvalidateCacheProject87BB538E",
                   "Arn",
                 ],
@@ -965,20 +1100,20 @@ artifacts:
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineCodePipelineInvalidateCacheInvalidateCacheCodePipelineActionRoleDefaultPolicyDB9DC910",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineCodePipelineInvalidateCacheInvalidateCacheCodePipelineActionRole50A587E8",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineCodePipelineRoleDefaultPolicy37C67326": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "PipelineCodePipelineRoleDefaultPolicy37C67326": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
@@ -991,19 +1126,19 @@ artifacts:
                 "s3:Abort*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineS3ArtifactBucketD0011AD2",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineS3ArtifactBucketD0011AD2",
                           "Arn",
                         ],
@@ -1014,31 +1149,31 @@ artifacts:
                 },
               ],
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineCodePipelineBuildCodeBuildCodePipelineActionRoleC24DFEC3",
                   "Arn",
                 ],
               },
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineCodePipelineDeployS3DeployCodePipelineActionRole561C470A",
                   "Arn",
                 ],
               },
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineCodePipelineInvalidateCacheInvalidateCacheCodePipelineActionRole50A587E8",
                   "Arn",
                 ],
@@ -1048,22 +1183,22 @@ artifacts:
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineCodePipelineRoleDefaultPolicy37C67326",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineCodePipelineRoleEE058E60",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineCodePipelineRoleEE058E60": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineCodePipelineRoleEE058E60": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codepipeline.amazonaws.com",
               },
             },
@@ -1073,38 +1208,38 @@ artifacts:
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineCodePipelineSourceGitHubSourceWebhookResourceABB4AE16": Object {
-      "Properties": Object {
+    "PipelineCodePipelineSourceGitHubSourceWebhookResourceABB4AE16": {
+      "Properties": {
         "Authentication": "GITHUB_HMAC",
-        "AuthenticationConfiguration": Object {
+        "AuthenticationConfiguration": {
           "SecretToken": "bar",
         },
-        "Filters": Array [
-          Object {
+        "Filters": [
+          {
             "JsonPath": "$.ref",
             "MatchEquals": "refs/heads/{Branch}",
           },
         ],
         "RegisterWithThirdParty": true,
         "TargetAction": "GitHubSource",
-        "TargetPipeline": Object {
+        "TargetPipeline": {
           "Ref": "PipelineCodePipeline4FC0E9B7",
         },
         "TargetPipelineVersion": 1,
       },
       "Type": "AWS::CodePipeline::Webhook",
     },
-    "PipelineS3ArtifactBucketAutoDeleteObjectsCustomResourceF98BFBDF": Object {
+    "PipelineS3ArtifactBucketAutoDeleteObjectsCustomResourceF98BFBDF": {
       "DeletionPolicy": "Delete",
-      "DependsOn": Array [
+      "DependsOn": [
         "PipelineS3ArtifactBucketPolicy7C2041CC",
       ],
-      "Properties": Object {
-        "BucketName": Object {
+      "Properties": {
+        "BucketName": {
           "Ref": "PipelineS3ArtifactBucketD0011AD2",
         },
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
             "Arn",
           ],
@@ -1113,11 +1248,11 @@ artifacts:
       "Type": "Custom::S3AutoDeleteObjects",
       "UpdateReplacePolicy": "Delete",
     },
-    "PipelineS3ArtifactBucketD0011AD2": Object {
+    "PipelineS3ArtifactBucketD0011AD2": {
       "DeletionPolicy": "Delete",
-      "Properties": Object {
-        "Tags": Array [
-          Object {
+      "Properties": {
+        "Tags": [
+          {
             "Key": "aws-cdk:auto-delete-objects",
             "Value": "true",
           },
@@ -1126,41 +1261,42 @@ artifacts:
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Delete",
     },
-    "PipelineS3ArtifactBucketPolicy7C2041CC": Object {
-      "Properties": Object {
-        "Bucket": Object {
+    "PipelineS3ArtifactBucketPolicy7C2041CC": {
+      "Properties": {
+        "Bucket": {
           "Ref": "PipelineS3ArtifactBucketD0011AD2",
         },
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
               ],
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::GetAtt": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
                     "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
                     "Arn",
                   ],
                 },
               },
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineS3ArtifactBucketD0011AD2",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineS3ArtifactBucketD0011AD2",
                           "Arn",
                         ],
@@ -1178,22 +1314,22 @@ artifacts:
       "Type": "AWS::S3::BucketPolicy",
     },
   },
-  "Rules": Object {
-    "CheckBootstrapVersion": Object {
-      "Assertions": Array [
-        Object {
-          "Assert": Object {
-            "Fn::Not": Array [
-              Object {
-                "Fn::Contains": Array [
-                  Array [
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
                     "1",
                     "2",
                     "3",
                     "4",
                     "5",
                   ],
-                  Object {
+                  {
                     "Ref": "BootstrapVersion",
                   },
                 ],

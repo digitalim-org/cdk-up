@@ -4,7 +4,6 @@ import { Bucket } from "aws-cdk-lib/aws-s3";
 import { Distribution } from "aws-cdk-lib/aws-cloudfront";
 import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { Template } from "aws-cdk-lib/assertions";
-import * as util from "util";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -32,7 +31,7 @@ describe("Pipeline", () => {
   it("Creates the right CodeBuild configuration", () => {
     // console.log(util.inspect(template.toJSON(), false, 6))
     const expectedYaml = fs.readFileSync(
-      path.join(__dirname, "..", "lib", "Pipeline", "buildspec.yml"),
+      path.join(__dirname, "..", "lib", "pipeline", "buildspec.yml"),
       { encoding: "utf8" }
     );
 
